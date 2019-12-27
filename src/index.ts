@@ -20,14 +20,21 @@ export const useOnMountAndUnmount = (callback: () => () => void) => {
   }, []);
 };
 
+/**
+ *
+ * @param onUpdate
+ * @param onlyOnUpdate `ture`: `onUpdate` will only be called while `deps` changed. `false`: `onUpdate` will be called while `onMount` and `deps` changed
+ * @param deps
+ */
 export const useOnUpdate = (
   onUpdate: () => void,
-  deps: DependencyList = []
+  onlyOnUpdate: boolean = false,
+  deps: DependencyList
 ) => {
   const isFirst = useRef(true);
 
   useEffect(() => {
-    if (isFirst.current) {
+    if (onlyOnUpdate && isFirst.current) {
       isFirst.current = false;
     } else {
       onUpdate();
@@ -43,7 +50,7 @@ export const useLogger = (componentName: string, ...rest: any[]) => {
 
   useOnUpdate(() => {
     console.log(`${componentName} updated`, ...rest);
-  });
+  }, true);
 
   useOnUnmount(() => {
     console.log(`${componentName} unmounted`, ...rest);
