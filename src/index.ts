@@ -33,14 +33,17 @@ export const useOnUpdate = (
 ) => {
   const isFirst = useRef(true);
 
-  useEffect(() => {
-    if (onlyOnUpdate && isFirst.current) {
-      isFirst.current = false;
-    } else {
-      onUpdate();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, deps);
+  useEffect(
+    () => {
+      if (onlyOnUpdate && isFirst.current) {
+        isFirst.current = false;
+      } else {
+        onUpdate();
+      }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    },
+    Array.isArray(deps) ? [...deps] : deps
+  );
 };
 
 export const useLogger = (componentName: string, ...rest: any[]) => {
