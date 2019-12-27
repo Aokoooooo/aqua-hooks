@@ -29,7 +29,7 @@ export const useOnMountAndUnmount = (callback: () => () => void) => {
 export const useOnUpdate = (
   onUpdate: () => void,
   onlyOnUpdate: boolean = false,
-  deps: DependencyList
+  deps?: DependencyList
 ) => {
   const isFirst = useRef(true);
 
