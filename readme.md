@@ -7,5 +7,7 @@
 - `useOnMount(onMount: () => void) => void`
 - `useOnUnmount = (onUnmount: () => void) => void`
 - `useOnMountAndUnmount = (callback: () => () => void) => void`
-- `useOnUpdate = (onUpdate: () => void, deps: DependencyList = []) =>`
+- `useOnUpdate = (onUpdate: () => void, deps?: DependencyList) => void`
+- `useOnlyOnUpdate = (onUpdate: () => void, deps?: DependencyList) => void`
+- `useRefCallback = (fn: () => void, deps?: DependencyList) => () => void`
 - `useLogger = (componentName: string, ...rest: any[]) => void`
