@@ -66,16 +66,22 @@ export const useOnlyOnUpdate = (
  * @param fn
  * @param deps
  */
-export const useRefCallback = (fn: () => void, deps: DependencyList = []) => {
-  const ref = useRef(fn);
+export const useRefCallback = <T extends (...args: any[]) => any>(
+  fn: T,
+  deps: DependencyList = []
+): T => {
+  const ref = useRef<T>(fn);
 
   useOnUpdate(() => {
     ref.current = fn;
   }, [fn, ...deps]);
 
-  return useCallback(() => {
-    return ref.current();
-  }, [ref]);
+  return useCallback(
+    (...args: any[]) => {
+      return ref.current(args);
+    },
+    [ref]
+  ) as T;
 };
 
 export const useLogger = (componentName: string, ...rest: any[]) => {

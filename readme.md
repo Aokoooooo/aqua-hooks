@@ -9,5 +9,5 @@
 - `useOnMountAndUnmount = (callback: () => () => void) => void`
 - `useOnUpdate = (onUpdate: () => void, deps?: DependencyList) => void`
 - `useOnlyOnUpdate = (onUpdate: () => void, deps?: DependencyList) => void`
-- `useRefCallback = (fn: () => void, deps?: DependencyList) => () => void`
+- `useRefCallback = <T extends (...args: any[]) => any> (fn: T, deps?: DependencyList) => () => void`
 - `useLogger = (componentName: string, ...rest: any[]) => void`
