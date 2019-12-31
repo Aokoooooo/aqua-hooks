@@ -78,7 +78,7 @@ export const useRefCallback = <T extends (...args: any[]) => any>(
 
   return useCallback(
     (...args: any[]) => {
-      return ref.current(args);
+      return ref.current(...args);
     },
     [ref]
   ) as T;
