@@ -1,4 +1,11 @@
 import { DependencyList, useCallback, useEffect, useRef } from "react";
+export {
+  useDebounce,
+  useDebounceFn,
+  useThrottle,
+  useThrottleFn,
+  ReturnValue
+} from "./useDebounce";
 
 export const useOnMount = (onMount: () => void) => {
   useEffect(() => {
