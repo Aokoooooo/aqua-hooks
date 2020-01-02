@@ -5,7 +5,7 @@ export {
   useThrottle,
   useThrottleFn,
   ReturnValue
-} from "./useDebounce";
+} from "./debounceAndThrottle";
 
 export const useOnMount = (onMount: () => void) => {
   useEffect(() => {
