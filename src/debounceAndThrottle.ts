@@ -1,4 +1,4 @@
-import { DependencyList, useCallback, useRef, useState } from "react";
+import { DependencyList, useRef, useState } from "react";
 
 import { useOnlyOnUpdate, useOnUnmount, useRefCallback } from ".";
 
@@ -35,7 +35,7 @@ export function useDebounceFn<T extends any[]>(
   wait?: number
 ): ReturnValue<T> {
   // tslint:disable-next-line: variable-name
-  const _wait = typeof deps === "number" ? deps : wait || 0;
+  const _wait = (typeof deps === "number" ? deps : wait) as number;
   // tslint:disable-next-line: variable-name
   const _deps = (Array.isArray(deps) ? deps : []) as DependencyList;
 
@@ -43,7 +43,7 @@ export function useDebounceFn<T extends any[]>(
   const fnRef = useRef<FnType>(fn);
   fnRef.current = fn;
 
-  const cancel = useCallback(() => {
+  const cancel = useRefCallback(() => {
     if (timer.current) {
       clearTimeout(timer.current);
     }
@@ -125,7 +125,7 @@ export function useThrottleFn<T extends any[]>(
   wait?: number
 ): ReturnValue<T> {
   // tslint:disable-next-line: variable-name
-  const _wait = typeof deps === "number" ? deps : wait || 0;
+  const _wait = (typeof deps === "number" ? deps : wait) as number;
   // tslint:disable-next-line: variable-name
   const _deps = (Array.isArray(deps) ? deps : []) as DependencyList;
 
@@ -135,7 +135,7 @@ export function useThrottleFn<T extends any[]>(
 
   const currentArgs = useRef<any>([]);
 
-  const cancel = useCallback(() => {
+  const cancel = useRefCallback(() => {
     if (timer.current) {
       clearTimeout(timer.current);
     }

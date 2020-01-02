@@ -40,6 +40,60 @@ describe("test debounce and throttle hooks", () => {
     test("useDebounceFn should be defined", () => {
       expect(useDebounceFn).toBeDefined();
     });
+
+    test("run and cancel work well", () => {
+      let count = 0;
+      const fn = () => count++;
+
+      act(() => {
+        hook = renderHook(() => useDebounceFn(fn, 2000));
+      });
+
+      act(() => {
+        hook.result.current.run();
+        expect(count).toBe(0);
+        hook.result.current.run();
+        hook.result.current.run();
+        hook.result.current.run();
+        hook.result.current.run();
+        jest.runAllTimers();
+        expect(count).toBe(1);
+
+        hook.result.current.run();
+        hook.result.current.cancel();
+        jest.runAllTimers();
+        expect(count).toBe(1);
+
+        hook.result.current.run();
+        hook.unmount();
+        jest.runAllTimers();
+        expect(count).toBe(1);
+      });
+    });
+
+    test("deps changed work well", () => {
+      let count = 0;
+      let size = 0;
+      const fn = () => count++;
+
+      act(() => {
+        hook = renderHook(() => useDebounceFn(fn, [size], 2000));
+      });
+
+      act(() => {
+        expect(count).toBe(0);
+        size++;
+        hook.rerender();
+        jest.runAllTimers();
+        expect(count).toBe(1);
+
+        size++;
+        hook.rerender();
+        hook.unmount();
+        jest.runAllTimers();
+        expect(count).toBe(1);
+      });
+    });
   });
 
   describe("useThrottle", () => {
@@ -104,6 +158,60 @@ describe("test debounce and throttle hooks", () => {
   describe("useThrottleFn", () => {
     test("useThrottleFn should be defined", () => {
       expect(useThrottleFn).toBeDefined();
+    });
+
+    test("run and cancel work well", () => {
+      let count = 0;
+      const fn = () => count++;
+
+      act(() => {
+        hook = renderHook(() => useThrottleFn(fn, 2000));
+      });
+
+      act(() => {
+        hook.result.current.run();
+        expect(count).toBe(0);
+        hook.result.current.run();
+        hook.result.current.run();
+        hook.result.current.run();
+        hook.result.current.run();
+        jest.runAllTimers();
+        expect(count).toBe(1);
+
+        hook.result.current.run();
+        hook.result.current.cancel();
+        jest.runAllTimers();
+        expect(count).toBe(1);
+
+        hook.result.current.run();
+        hook.unmount();
+        jest.runAllTimers();
+        expect(count).toBe(1);
+      });
+    });
+
+    test("deps changed work well", () => {
+      let count = 0;
+      let size = 0;
+      const fn = () => count++;
+
+      act(() => {
+        hook = renderHook(() => useThrottleFn(fn, [size], 2000));
+      });
+
+      act(() => {
+        expect(count).toBe(0);
+        size++;
+        hook.rerender();
+        jest.runAllTimers();
+        expect(count).toBe(1);
+
+        size++;
+        hook.rerender();
+        hook.unmount();
+        jest.runAllTimers();
+        expect(count).toBe(1);
+      });
     });
   });
 });
