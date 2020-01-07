@@ -15,3 +15,5 @@ export {
   useThrottleFn,
   ReturnValue
 } from "./debounceAndThrottle";
+
+export { useAsync } from "./request";

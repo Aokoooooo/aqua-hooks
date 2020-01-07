@@ -55,3 +55,20 @@ interface ReturnValue<T extends any[]> {
     wait: number
   ): ReturnValue<T>;
   ```
+
+### async
+
+- `useAsync`:封装异步方法,额外返回`loading`字段代表异步流程是否结束
+
+  ```typescript
+  interface IUseAsyncConfig<T extends any[], R extends any, E extends any> {
+    onSuccess?: (arg: R) => void;
+    onFailed?: (arg: E) => void;
+    onComplete?: () => void;
+  }
+
+  function useAsync<T extends any[], R extends any, E extends any = {}>(
+    asyncFn: (...args: T) => Promise<R>,
+    config?: IUseAsyncConfig<T, R, E>
+  ): { run: (...args: T) => void; loading: boolean };
+  ```
