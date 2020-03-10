@@ -5,7 +5,8 @@ export {
   useOnUnmount,
   useOnUpdate,
   useOnlyOnUpdate,
-  useRefCallback
+  useRefCallback,
+  useConstant
 } from "./baseHooks";
 
 export {
@@ -17,3 +18,4 @@ export {
 } from "./debounceAndThrottle";
 
 export { useAsync } from "./request";
+export { useImmediate, useInterval, useTimeout } from "./timer";

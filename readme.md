@@ -6,13 +6,18 @@
 
 ### 基础 hooks
 
-- `useOnMount = (onMount: () => void) => void`
-- `useOnUnmount = (onUnmount: () => void) => void`
-- `useOnMountAndUnmount = (callback: () => () => void) => void`
-- `useOnUpdate = (onUpdate: () => void, deps?: DependencyList) => void`
-- `useOnlyOnUpdate = (onUpdate: () => void, deps?: DependencyList) => void`
-- `useRefCallback = <T extends (...args: any[]) => any> (fn: T, deps?: DependencyList) => () => void`
-- `useLogger = (componentName: string, ...rest: any[]) => void`
+- `useOnMount = (onMount: () => void) : void`
+- `useOnUnmount = (onUnmount: () => void) : void`
+- `useOnMountAndUnmount = (callback: () => () => void) : void`
+- `useOnUpdate = (onUpdate: () => void, deps?: DependencyList) : void`
+- `useOnlyOnUpdate = (onUpdate: () => void, deps?: DependencyList) : void`
+- `useRefCallback = <T extends (...args: any[]) => any> (fn: T, deps?: DependencyList) : () => void`
+- `useLogger = (componentName: string, ...rest: any[]) : void`
+- `useConstant = <T>(fn: () => T) : T`
+
+  保证组件只创建一个值一次(useMemo 无法保证这一点).
+
+  详见[how-to-create-expensive-objects-lazily](https://reactjs.org/docs/hooks-faq.html#how-to-create-expensive-objects-lazily)
 
 ### 节流防抖
 
@@ -23,7 +28,7 @@ interface ReturnValue<T extends any[]> {
 }
 ```
 
-- `useDebounce = <T> (value: T, wait: number) => T`
+- `useDebounce = <T> (value: T, wait: number) : T`
 
 - `useDebounceFn`
 
@@ -40,7 +45,7 @@ interface ReturnValue<T extends any[]> {
   ): ReturnValue<T>;
   ```
 
-- `useThrottle = <T> (value: T, wait: number) => T`
+- `useThrottle = <T> (value: T, wait: number) : T`
 - `useThrottleFn`
 
   ```typescript
@@ -72,3 +77,11 @@ interface ReturnValue<T extends any[]> {
     config?: IUseAsyncConfig<T, R, E>
   ): { run: (...args: T) => void; loading: boolean };
   ```
+
+### 定时器
+
+会在组件卸载后自动清理定时器,同时 hooks 会返回一个定时器清理函数,用于手动控制.
+
+- `useInterval = (fn: (...args: any[]) => void, ...args: any[]) : () : void`
+- `useTimeout = (fn: (...args: any[]) => void, ...args: any[]) : () : void`
+- `useImmediate = (fn: (...args: any[]) => void, ...args: any[]) : () : void`

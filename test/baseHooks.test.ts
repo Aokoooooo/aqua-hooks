@@ -1,5 +1,6 @@
 import { renderHook, RenderHookResult } from "@testing-library/react-hooks";
 import {
+  useConstant,
   useLogger,
   useOnlyOnUpdate,
   useOnMount,
@@ -9,7 +10,7 @@ import {
   useRefCallback
 } from "../src";
 
-let hook: RenderHookResult<() => void, void>;
+let hook: RenderHookResult<() => void, any>;
 
 describe("test base hooks", () => {
   describe("useOnMount", () => {
@@ -183,6 +184,26 @@ describe("test base hooks", () => {
       expect(spy).toBeCalledWith(`${name} updated`, [1]);
       hook.unmount();
       expect(spy).toBeCalledWith(`${name} unmounted`, [1]);
+    });
+  });
+
+  describe("useConstant", () => {
+    const mockFn = jest.fn(() => 1);
+
+    test("useConstant should be defined", () => {
+      expect(useConstant).toBeDefined();
+    });
+
+    test("fn should only be called once", () => {
+      hook = renderHook(() => useConstant(mockFn));
+      expect(mockFn).toBeCalledTimes(1);
+      expect(hook.result.current).toEqual(1);
+      hook.rerender();
+      expect(mockFn).toBeCalledTimes(1);
+      expect(hook.result.current).toEqual(1);
+      hook.unmount();
+      expect(mockFn).toBeCalledTimes(1);
+      expect(hook.result.current).toEqual(1);
     });
   });
 });

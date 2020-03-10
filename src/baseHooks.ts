@@ -97,3 +97,13 @@ export const useLogger = (componentName: string, ...rest: any[]) => {
     console.log(`${componentName} unmounted`, ...rest);
   });
 };
+
+export function useConstant<T>(fn: () => T): T {
+  const ref = useRef<{ constant: T }>();
+
+  if (!ref.current) {
+    ref.current = { constant: fn() };
+  }
+
+  return ref.current.constant;
+}
