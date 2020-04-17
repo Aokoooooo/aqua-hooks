@@ -5,5 +5,6 @@ module.exports = {
   collectCoverage: true,
   collectCoverageFrom: ["src/**/*.ts"],
   coveragePathIgnorePatterns: ["/node_modules/"],
-  coverageDirectory: "coverage"
+  coverageDirectory: "coverage",
+  setupFiles: ["jest-date-mock"],
 };

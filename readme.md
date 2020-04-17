@@ -80,8 +80,28 @@ interface ReturnValue<T extends any[]> {
 
 ### 定时器
 
-会在组件卸载后自动清理定时器,同时 hooks 会返回一个定时器清理函数,用于手动控制.
+获取一个可以暂停,重开功能的定时器,通过`config`字段可以配置是否为`interval`(默认为`timeout`)以及是否立即触发(仅限`interval`)
 
-- `useInterval = (fn: (...args: any[]) => void, ...args: any[]) : () : void`
-- `useTimeout = (fn: (...args: any[]) => void, ...args: any[]) : () : void`
-- `useImmediate = (fn: (...args: any[]) => void, ...args: any[]) : () : void`
+- `useTimer`
+  ```typescript
+  /**
+   *
+   * @param fn callback
+   * @param delay delay or interval
+   * @param config intervalConfig
+   * @param args the third params of the timer's
+   */
+  function useTimer(
+    fn: (...props: any) => void,
+    delay: number,
+    config?: { isInterval?: boolean; runImmediately?: boolean },
+    ...args: any[]
+  ): {
+    run: (...props: any[]) => void;
+    stop: () => void;
+    pause: () => void;
+    resume: () => void;
+    isRunning: boolean;
+    isPaused: boolean;
+  };
+  ```

@@ -18,4 +18,4 @@ export {
 } from "./debounceAndThrottle";
 
 export { useAsync } from "./request";
-export { useInterval, useTimeout } from "./timer";
+export { useTimer } from "./timer";
