@@ -28,13 +28,10 @@ export const useOnMountAndUnmount = (callback: () => () => void) => {
  * @param deps
  */
 export const useOnUpdate = (onUpdate: () => void, deps?: DependencyList) => {
-  useEffect(
-    () => {
-      onUpdate();
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    },
-    Array.isArray(deps) ? [...deps] : deps
-  );
+  useEffect(() => {
+    onUpdate();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, deps);
 };
 
 /**
@@ -48,17 +45,14 @@ export const useOnlyOnUpdate = (
 ) => {
   const isFirst = useRef(true);
 
-  useEffect(
-    () => {
-      if (isFirst.current) {
-        isFirst.current = false;
-      } else {
-        onUpdate();
-      }
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    },
-    Array.isArray(deps) ? [...deps] : deps
-  );
+  useEffect(() => {
+    if (isFirst.current) {
+      isFirst.current = false;
+    } else {
+      onUpdate();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, deps);
 };
 
 /**

@@ -26,12 +26,3 @@ export function useTimeout(
   });
   return () => clearTimeout(timer.current as NodeJS.Timeout);
 }
-
-export function useImmediate(fn: (...args: any[]) => void, ...args: any[]) {
-  const timer = useRef<NodeJS.Immediate>();
-  useOnMountAndUnmount(() => {
-    timer.current = setImmediate(fn, args);
-    return () => clearImmediate(timer.current as NodeJS.Immediate);
-  });
-  return () => clearImmediate(timer.current as NodeJS.Immediate);
-}
